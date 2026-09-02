@@ -601,6 +601,59 @@ const DEFAULT_REF_SUPPORTS = {
   FA000: { label: 'Sans Support', quantite: 0 },
 };
 
+// Deuxième famille de codes support (autre site/config SAP), communiquée par
+// l'utilisateur. BAC DELAIZE et Carton only ne sont pas des palettes : 0.
+[
+  ['06988', 'Demi Palette', 0.5],
+  ['06990', 'Sans Support', 0],
+  ['06991', 'Carton only', 0],
+  ['06992', 'BAC DELAIZE', 0],
+  ['00187', '1 Palette Europe', 1],
+  ['94550', '2 Palettes Europe', 2],
+  ['94551', '3 Palettes Europe', 3],
+  ['94552', '4 Palettes Europe', 4],
+  ['94554', '5 Palettes Europe', 5],
+  ['94555', '6 Palettes Europe', 6],
+  ['94697', '7 Palettes Europe', 7],
+  ['94698', '8 Palettes Europe', 8],
+  ['95389', '1/2 Palette LPR', 0.5],
+  ['95390', '1/4 Palette LPR', 0.25],
+  ['95382', '1 Palette LPR 80x120', 1],
+  ['95383', '2 Palettes LPR 80x120', 2],
+  ['95384', '3 Palettes LPR 80x120', 3],
+  ['95385', '4 Palettes LPR 80x120', 4],
+  ['95386', '5 Palettes LPR 80x120', 5],
+  ['95387', '6 Palettes LPR 80x120', 6],
+  ['95397', '7 Palettes LPR 80x120', 7],
+  ['95388', '8 Palettes LPR 80x120', 8],
+  ['01177', '1/2 Palette LPR', 0.5],
+  ['01179', '1/4 Palette LPR', 0.25],
+  ['01180', '1 Palette LPR 80x120', 1],
+  ['01181', '2 Palettes LPR 80x120', 2],
+  ['01182', '3 Palettes LPR 80x120', 3],
+  ['01183', '4 Palettes LPR 80x120', 4],
+  ['01184', '5 Palettes LPR 80x120', 5],
+  ['01185', '6 Palettes LPR 80x120', 6],
+  ['01186', '7 Palettes LPR 80x120', 7],
+  ['01187', '8 Palettes LPR 80x120', 8],
+].forEach(([code, label, quantite]) => {
+  DEFAULT_REF_SUPPORTS[code] = { label, quantite };
+});
+
+// Certains codes support sont numériques et Excel peut les exporter en
+// nombre (zéro de tête perdu, ex. "06988" -> 6988). On tolère cette
+// variante à la lecture plutôt que de dupliquer les lignes du référentiel.
+function findSupportEntry(code) {
+  if (state.refSupports[code]) return state.refSupports[code];
+  if (/^[0-9]+$/.test(code)) {
+    const padded = code.padStart(5, '0');
+    if (state.refSupports[padded]) return state.refSupports[padded];
+    const stripped = String(Number(code));
+    if (state.refSupports[stripped]) return state.refSupports[stripped];
+  }
+  return null;
+}
+
 // Correspondance connue itinéraire -> transporteur, communiquée par l'utilisateur.
 // Correspondances exactes (codes spécifiques, notamment les routes GMS).
 const EXACT_CARRIER_MAP = {
@@ -845,7 +898,7 @@ function rebuildMouvements() {
   const mouvements = [];
 
   for (const row of state.zm19) {
-    let support = state.refSupports[row.typePal];
+    let support = findSupportEntry(row.typePal);
     if (!support) {
       support = { label: 'À définir (code inconnu)', quantite: null };
       state.refSupports[row.typePal] = support;

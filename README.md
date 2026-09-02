@@ -50,7 +50,12 @@ tableau HTML stylé reconnu nativement par Excel.
 ## Référentiels
 
 - **Types de palettes** : quantité réelle de palettes représentée par chaque code
-  `Typ Pal` (ex. `FE125` = 5 palettes Europe). Pré-rempli, éditable.
+  `Typ Pal` (ex. `FE125` = 5 palettes Europe). Pré-rempli avec deux familles de
+  codes (`FE0xx`/`FH017`/`FA000` et une seconde famille numérique couvrant Palette
+  Europe, Palette/BAC LPR, Demi/Quart palette, Carton only, BAC DELAIZE — ces
+  deux derniers comptent pour 0 palette), éditable. Un code numérique dont le
+  zéro de tête aurait été perdu par Excel (ex. `6988` au lieu de `06988`) est
+  reconnu automatiquement sans dupliquer la ligne.
 - **Transporteurs** : nom du transporteur associé à chaque code d'itinéraire
   transport. Pré-rempli à partir des correspondances connues :
 
