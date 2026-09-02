@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pallet Flow — Suivi des palettes</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/vendor/xlsx.full.min.js"></script>
+</head>
+<body>
+<header class="app-header">
+  <h1>Pallet Flow</h1>
+  <p class="subtitle">Suivi des palettes par livraison &amp; transporteur (remplacement base Access)</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="import">Import &amp; Rapprochement</button>
+  <button class="tab-btn" data-tab="mouvements">Mouvements</button>
+  <button class="tab-btn" data-tab="retours">Retours transporteur</button>
+  <button class="tab-btn" data-tab="solde">Solde transporteurs</button>
+  <button class="tab-btn" data-tab="referentiels">Référentiels</button>
+</nav>
+
+<main>
+
+  <!-- ==================== IMPORT ==================== -->
+  <section id="tab-import" class="tab-panel active">
+    <div class="grid-2">
+      <div class="card">
+        <h2>1. Import ZM19 (sorties palettes)</h2>
+        <p class="hint">Colonnes utilisées : Typ Pal, Document (livraison), Exp (n° transport), Date. Le reste est ignoré.</p>
+        <input type="file" id="file-zm19" accept=".xlsx,.xls">
+        <div id="zm19-import-result" class="import-result"></div>
+      </div>
+      <div class="card">
+        <h2>2. Import VTTK (itinéraire / transport)</h2>
+        <p class="hint">Colonnes utilisées : Nº du transport, Itinéraire transport. Les lignes sans itinéraire (chargement non finalisé) sont ignorées.</p>
+        <input type="file" id="file-vttk" accept=".xlsx,.xls">
+        <div id="vttk-import-result" class="import-result"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. Rapprochement</h2>
+      <p class="hint">Fait correspondre chaque ligne ZM19 (par n° de transport) à son itinéraire VTTK, puis résout le transporteur via le référentiel.</p>
+      <button id="btn-rapprocher" class="btn-primary">Lancer le rapprochement</button>
+      <div id="rapprochement-result" class="import-result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Historique des imports</h2>
+      <table class="data-table" id="table-batches">
+        <thead><tr><th>Date import</th><th>Type</th><th>Fichier</th><th>Lignes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card danger-zone">
+      <h2>Zone dangereuse</h2>
+      <button id="btn-reset-all" class="btn-danger">Réinitialiser toutes les données</button>
+    </div>
+  </section>
+
+  <!-- ==================== MOUVEMENTS ==================== -->
+  <section id="tab-mouvements" class="tab-panel">
+    <div class="card">
+      <h2>Historique des sorties de palettes</h2>
+      <div class="filters">
+        <label>Année
+          <select id="filter-annee"><option value="">Toutes</option></select>
+        </label>
+        <label>Mois
+          <select id="filter-mois"><option value="">Tous</option></select>
+        </label>
+        <label>Transporteur
+          <select id="filter-transporteur"><option value="">Tous</option></select>
+        </label>
+        <label>Statut
+          <select id="filter-statut">
+            <option value="">Tous</option>
+            <option value="ok">Identifiés</option>
+            <option value="attente">En attente de rapprochement</option>
+          </select>
+        </label>
+        <button id="btn-export-mouvements" class="btn-secondary">Exporter (XLSX)</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="table-mouvements">
+          <thead>
+            <tr>
+              <th>Date</th><th>Livraison</th><th>N° transport</th><th>Type palette</th>
+              <th>Qté</th><th>Itinéraire</th><th>Transporteur</th><th>Statut</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="totals" id="mouvements-totals"></p>
+    </div>
+  </section>
+
+  <!-- ==================== RETOURS ==================== -->
+  <section id="tab-retours" class="tab-panel">
+    <div class="card">
+      <h2>Saisir un retour de palettes</h2>
+      <form id="form-retour" class="inline-form">
+        <label>Date
+          <input type="date" id="retour-date" required>
+        </label>
+        <label>Transporteur
+          <select id="retour-transporteur" required></select>
+        </label>
+        <label>Quantité
+          <input type="number" id="retour-quantite" min="0" step="1" required>
+        </label>
+        <label>Référence / commentaire
+          <input type="text" id="retour-reference" placeholder="Bon d'échange, remarque...">
+        </label>
+        <button type="submit" class="btn-primary">Ajouter le retour</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Retours enregistrés</h2>
+      <div class="table-wrap">
+        <table class="data-table" id="table-retours">
+          <thead><tr><th>Date</th><th>Transporteur</th><th>Quantité</th><th>Référence</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SOLDE ==================== -->
+  <section id="tab-solde" class="tab-panel">
+    <div class="card">
+      <h2>Solde de palettes par transporteur</h2>
+      <p class="hint">Solde = total sorties (ZM19/VTTK) − total retours saisis manuellement. Un solde positif signifie que le transporteur doit encore rendre des palettes.</p>
+      <button id="btn-export-solde" class="btn-secondary">Exporter le solde (XLSX)</button>
+      <div class="table-wrap">
+        <table class="data-table" id="table-solde">
+          <thead><tr><th>Transporteur</th><th>Itinéraire(s)</th><th>Sorties</th><th>Retours</th><th>Solde</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== REFERENTIELS ==================== -->
+  <section id="tab-referentiels" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Types de palettes / supports</h2>
+        <table class="data-table editable" id="table-ref-supports">
+          <thead><tr><th>Code (Typ Pal)</th><th>Libellé</th><th>Quantité réelle</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <button id="btn-add-support" class="btn-secondary">Ajouter un type</button>
+      </div>
+      <div class="card">
+        <h2>Transporteurs (par itinéraire)</h2>
+        <p class="hint">Complète le nom du transporteur pour chaque code d'itinéraire découvert lors des imports VTTK.</p>
+        <table class="data-table editable" id="table-ref-transporteurs">
+          <thead><tr><th>Itinéraire transport</th><th>Nom du transporteur</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <button id="btn-add-transporteur" class="btn-secondary">Ajouter un itinéraire</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="js/app.js"></script>
+</body>
+</html>
