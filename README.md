@@ -1,8 +1,13 @@
 # Pallet Flow
 
 Application 100% front-end (HTML/CSS/JS, aucun backend) pour le suivi des palettes
-par livraison et par transporteur, destinée à remplacer une base Access. Prototype
-mono-utilisateur : les données sont stockées dans le navigateur (`localStorage`).
+par livraison et par transporteur, destinée à remplacer une base Access.
+
+**Outil volontairement sans sauvegarde** : aucune donnée n'est écrite où que ce soit
+(pas de `localStorage`, pas de fichier, pas de serveur). Tout reste en mémoire le
+temps de la session et disparaît au rechargement ou à la fermeture de la page —
+import, calcul, export, et c'est tout. Ce choix évite les soucis de fichiers qui
+grossissent au fil des mois et de données obsolètes qui traînent dans le navigateur.
 
 ## Utilisation
 
@@ -73,11 +78,15 @@ tableau HTML stylé reconnu nativement par Excel.
   ces règles est ajouté au référentiel avec un nom vide (« à nommer ») — à compléter
   dans l'onglet *Référentiels*.
 
-## Limites connues (prototype)
+## Limites connues
 
-- Mono-utilisateur, données locales au navigateur (pas de partage entre postes).
+- Aucune persistance : fermer l'onglet ou recharger la page vide tout — pense à
+  exporter avant de partir. Ce n'est pas un bug, c'est le mode de fonctionnement
+  voulu (outil portable, toujours vierge).
+- Mono-utilisateur, pas de partage de données entre postes (chacun importe ses
+  propres extractions SAP).
 - Import Excel manuel (pas de connexion SAP directe).
-- Pas de reprise de l'historique de l'ancienne base Access (démarrage à blanc).
 
-Ces points pourront évoluer vers une vraie base de données partagée avec backend
-si le besoin de plusieurs utilisateurs simultanés se confirme.
+Si le besoin d'historiser dans le temps ou de partager entre plusieurs personnes
+apparaît, ça pourra évoluer vers une vraie base de données avec backend — mais ce
+n'est plus l'outil "portable et vierge" décrit ici.

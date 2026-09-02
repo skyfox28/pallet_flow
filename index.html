@@ -6,48 +6,43 @@
 <title>Pallet Flow — Suivi des palettes</title>
 <style>
 :root {
-  --bg: #f5f5f7;
+  --header-bg: #1c2b3a;
+  --header-border: #0f1c28;
+  --bg: #eef1f4;
   --card-bg: #ffffff;
-  --border: #e5e5e7;
-  --text: #1d1d1f;
-  --text-muted: #6e6e73;
-  --text-faint: #a1a1a6;
-  --primary: #0071e3;
-  --primary-dark: #0059b3;
-  --primary-tint: #e8f2fe;
-  --success: #2fae4e;
-  --success-tint: #e6f7ea;
-  --warning: #ff9500;
-  --warning-tint: #fff2e0;
-  --danger: #ff3b30;
-  --danger-tint: #ffe9e7;
-  --neutral-bar: #c7c7cc;
-  --radius-lg: 18px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 6px 20px rgba(0, 0, 0, 0.05);
+  --border: #d7dce2;
+  --border-strong: #b8c0c9;
+  --text: #23303d;
+  --text-muted: #5b6b7a;
+  --text-faint: #8b98a5;
+  --primary: #1f5c9e;
+  --primary-dark: #164674;
+  --primary-tint: #e3edf7;
+  --success: #2f7a4f;
+  --success-tint: #e5f1e9;
+  --warning: #a5680d;
+  --warning-tint: #f8ecd9;
+  --danger: #b3261e;
+  --danger-tint: #f8e3e1;
+  --neutral-bar: #c3cad1;
+  --radius-md: 6px;
+  --radius-sm: 4px;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
-  -webkit-font-smoothing: antialiased;
+  font-size: 13.5px;
 }
 
 .app-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 18px 32px 14px;
+  background: var(--header-bg);
+  border-bottom: 3px solid var(--primary);
+  padding: 14px 28px;
   display: flex;
   align-items: baseline;
   gap: 12px;
@@ -55,45 +50,41 @@ body {
 }
 .app-header h1 {
   margin: 0;
-  font-size: 21px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.01em;
 }
-.subtitle { margin: 0; color: var(--text-muted); font-size: 13px; }
+.subtitle { margin: 0; color: #a9b7c4; font-size: 12px; }
 
 .tabs {
-  position: sticky;
-  top: 58px;
-  z-index: 19;
-  display: inline-flex;
+  display: flex;
   gap: 2px;
-  background: #e8e8ed;
-  border-radius: 11px;
-  padding: 3px;
-  margin: 16px 32px 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-strong);
+  padding: 0 24px;
 }
 
 .tab-btn {
   background: none;
   border: none;
-  padding: 8px 16px;
-  font-size: 13px;
+  border-bottom: 2px solid transparent;
+  padding: 11px 16px;
+  font-size: 12.5px;
   font-family: inherit;
   cursor: pointer;
   color: var(--text-muted);
-  border-radius: 9px;
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  font-weight: 500;
 }
-.tab-btn:hover { color: var(--text); }
+.tab-btn:hover { color: var(--text); background: #f4f6f8; }
 .tab-btn.active {
-  color: var(--text);
-  background: #ffffff;
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 700;
 }
 
-main { padding: 22px 32px 64px; max-width: 1240px; margin: 0 auto; }
+main { padding: 20px 28px 56px; max-width: 1280px; margin: 0 auto; }
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
@@ -101,18 +92,24 @@ main { padding: 22px 32px 64px; max-width: 1240px; margin: 0 auto; }
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  padding: 20px 22px;
-  margin-bottom: 20px;
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 16px;
 }
-.card h2 { margin: 0 0 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-.hint { color: var(--text-muted); font-size: 12.5px; margin: 0 0 12px; line-height: 1.5; }
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+.hint { color: var(--text-muted); font-size: 12px; margin: 0 0 12px; line-height: 1.5; }
 
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
 }
 @media (max-width: 800px) {
   .grid-2 { grid-template-columns: 1fr; }
@@ -122,58 +119,49 @@ main { padding: 22px 32px 64px; max-width: 1240px; margin: 0 auto; }
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .kpi-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  padding: 18px 18px 16px;
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
-
-.kpi-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  background: var(--primary-tint);
-}
-.kpi-icon.warn { background: var(--warning-tint); }
-.kpi-icon.ok { background: var(--success-tint); }
-.kpi-icon.danger { background: var(--danger-tint); }
+.kpi-card.warn { border-left-color: var(--warning); }
+.kpi-card.ok { border-left-color: var(--success); }
 
 .kpi-label {
-  font-size: 12.5px;
+  font-size: 11px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 .kpi-value {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1.1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 .kpi-sub {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-faint);
 }
 
 /* ---------- horizontal bar list ---------- */
 
-.bar-list { display: flex; flex-direction: column; gap: 10px; }
-.bar-row { display: grid; grid-template-columns: 130px 1fr 60px; align-items: center; gap: 10px; }
+.bar-list { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 140px 1fr 64px; align-items: center; gap: 10px; }
 .bar-row .bar-label {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -182,30 +170,30 @@ main { padding: 22px 32px 64px; max-width: 1240px; margin: 0 auto; }
 .bar-row .bar-label.muted { color: var(--text-faint); font-style: italic; }
 .bar-track {
   display: block;
-  background: #f0f0f2;
-  border-radius: 999px;
-  height: 12px;
+  background: #e6e9ec;
+  border-radius: var(--radius-sm);
+  height: 11px;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 .bar-fill {
   display: block;
   height: 100%;
-  border-radius: 999px;
   background: var(--primary);
   min-width: 3px;
 }
 .bar-fill.muted { background: var(--neutral-bar); }
 .bar-row .bar-value {
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
 .empty-state {
   color: var(--text-faint);
-  font-size: 13px;
-  padding: 20px 4px;
+  font-size: 12.5px;
+  padding: 18px 4px;
   text-align: center;
 }
 
@@ -215,9 +203,9 @@ input[type="number"],
 input[type="date"],
 select {
   font: inherit;
-  font-size: 13.5px;
-  padding: 8px 11px;
-  border: 1px solid var(--border);
+  font-size: 13px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   background: #fff;
   color: var(--text);
@@ -225,65 +213,66 @@ select {
 input:focus, select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-tint);
+  box-shadow: 0 0 0 2px var(--primary-tint);
 }
 
 .btn-primary, .btn-secondary, .btn-danger {
   font: inherit;
-  font-size: 13.5px;
-  border: none;
-  border-radius: 980px;
-  padding: 9px 20px;
+  font-size: 12.5px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
   cursor: pointer;
   font-weight: 600;
-  transition: opacity 0.15s ease, transform 0.05s ease;
 }
-.btn-primary:active, .btn-secondary:active, .btn-danger:active { transform: scale(0.97); }
-.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary { background: var(--primary); color: #fff; border-color: var(--primary-dark); }
 .btn-primary:hover { background: var(--primary-dark); }
-.btn-secondary { background: #f0f0f2; color: var(--text); }
-.btn-secondary:hover { background: #e4e4e8; }
-.btn-danger { background: var(--danger); color: #fff; }
-.btn-danger:hover { opacity: 0.88; }
+.btn-secondary { background: #f2f4f6; color: var(--text); border-color: var(--border-strong); }
+.btn-secondary:hover { background: #e6e9ec; }
+.btn-danger { background: #fff; color: var(--danger); border-color: var(--danger); }
+.btn-danger:hover { background: var(--danger-tint); }
 
-.import-result { margin-top: 10px; font-size: 13px; }
+.import-result { margin-top: 10px; font-size: 12.5px; }
 .import-result .ok { color: var(--success); }
 .import-result .warn { color: var(--warning); }
 .import-result .err { color: var(--danger); }
 
-.danger-zone { border-color: #f6cfcb; }
+.danger-zone { border-color: #e3b8b5; }
 
-.table-wrap { overflow-x: auto; margin-top: 12px; border-radius: var(--radius-md); }
+.table-wrap { overflow-x: auto; margin-top: 10px; }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12.5px;
+  font-size: 12px;
 }
 .data-table th, .data-table td {
   text-align: left;
-  padding: 9px 12px;
+  padding: 8px 11px;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 .data-table th {
   color: var(--text-muted);
-  font-weight: 600;
-  background: #fafafc;
-  font-size: 11.5px;
+  font-weight: 700;
+  background: #f4f6f8;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-strong);
 }
-.data-table tbody tr:hover { background: #f8fafc; }
+.data-table tbody tr:nth-child(even) { background: #f8f9fb; }
+.data-table tbody tr:hover { background: var(--primary-tint); }
 
 .data-table.editable input {
   width: 100%;
   min-width: 120px;
   border: 1px solid transparent;
   background: transparent;
-  padding: 5px 7px;
-  border-radius: 6px;
-  font-size: 13px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
 }
 .data-table.editable input:focus {
   border-color: var(--primary);
@@ -293,45 +282,52 @@ input:focus, select:focus {
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-end;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .filters label {
   display: flex;
   flex-direction: column;
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--text-muted);
-  gap: 4px;
-  font-weight: 500;
+  gap: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .inline-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   align-items: flex-end;
 }
 .inline-form label {
   display: flex;
   flex-direction: column;
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--text-muted);
-  gap: 4px;
-  font-weight: 500;
+  gap: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.totals { font-weight: 600; margin-top: 10px; font-size: 13px; }
+.totals { font-weight: 700; margin-top: 10px; font-size: 12.5px; color: var(--text-muted); }
 
 .badge {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: var(--radius-sm);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
 }
-.badge-ok { background: var(--success-tint); color: #1c7a34; }
-.badge-warn { background: var(--warning-tint); color: #a15c00; }
+.badge-ok { background: var(--success-tint); color: var(--success); border-color: #cfe4d6; }
+.badge-warn { background: var(--warning-tint); color: var(--warning); border-color: #eddcb8; }
 
 .solde-positive { color: var(--warning); font-weight: 700; }
 .solde-zero { color: var(--success); font-weight: 700; }
@@ -342,7 +338,8 @@ input:focus, select:focus {
   border: none;
   color: var(--danger);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
 }
 
 </style>
@@ -395,32 +392,26 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   <section id="tab-dashboard" class="tab-panel active">
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-icon">📦</div>
         <div class="kpi-label">Palettes sorties</div>
         <div class="kpi-value" id="kpi-sorties">0</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon ok">↩️</div>
+      <div class="kpi-card ok">
         <div class="kpi-label">Palettes retournées</div>
         <div class="kpi-value" id="kpi-retours">0</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon warn">⚖️</div>
+      <div class="kpi-card warn">
         <div class="kpi-label">Solde global</div>
         <div class="kpi-value" id="kpi-solde">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">🚚</div>
         <div class="kpi-label">Transporteurs actifs</div>
         <div class="kpi-value" id="kpi-transporteurs">0</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon warn">⏳</div>
+      <div class="kpi-card warn">
         <div class="kpi-label">En attente de rapprochement</div>
         <div class="kpi-value" id="kpi-attente">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">📋</div>
         <div class="kpi-label">Mouvements enregistrés</div>
         <div class="kpi-value" id="kpi-mouvements">0</div>
         <div class="kpi-sub" id="kpi-dernier-import-sub">Aucun import</div>
@@ -436,6 +427,10 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 
   <!-- ==================== IMPORT ==================== -->
   <section id="tab-import" class="tab-panel">
+    <div class="card">
+      <h2>Outil sans sauvegarde</h2>
+      <p class="hint" style="margin-bottom:0">Aucune donnée n'est enregistrée : tout reste en mémoire le temps de la session et disparaît au rechargement ou à la fermeture de la page. Importe, laisse l'outil calculer, puis exporte le résultat.</p>
+    </div>
     <div class="grid-2">
       <div class="card">
         <h2>1. Import ZM19 (sorties palettes)</h2>
@@ -467,8 +462,9 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     </div>
 
     <div class="card danger-zone">
-      <h2>Zone dangereuse</h2>
-      <button id="btn-reset-all" class="btn-danger">Réinitialiser toutes les données</button>
+      <h2>Session</h2>
+      <p class="hint">Vide immédiatement les données de la session en cours sans recharger la page (équivalent à un rechargement).</p>
+      <button id="btn-reset-all" class="btn-danger">Vider la session</button>
     </div>
   </section>
 
@@ -586,18 +582,11 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 'use strict';
 
 /* ---------------------------------------------------------------------- *
- * Storage
+ * État — en mémoire uniquement. Rien n'est écrit sur le disque ou dans le
+ * navigateur (pas de localStorage) : l'outil est volontairement "portable"
+ * et repart toujours vierge à l'ouverture ou au rechargement de la page.
+ * Import -> calcul -> extraction, sans données qui persistent.
  * ---------------------------------------------------------------------- */
-
-const STORAGE_KEYS = {
-  zm19: 'pf_zm19_rows',
-  vttk: 'pf_vttk_map',
-  mouvements: 'pf_mouvements',
-  retours: 'pf_retours',
-  refSupports: 'pf_ref_supports',
-  refTransporteurs: 'pf_ref_transporteurs',
-  batches: 'pf_import_batches',
-};
 
 const DEFAULT_REF_SUPPORTS = {
   FE025: { label: 'Palette Europe', quantite: 1 },
@@ -651,40 +640,19 @@ function resolveKnownCarrierName(code) {
   return '';
 }
 
-function load(key, fallback) {
-  try {
-    const raw = localStorage.getItem(key);
-    if (raw === null) return fallback;
-    return JSON.parse(raw);
-  } catch (e) {
-    console.error('Erreur de lecture du stockage', key, e);
-    return fallback;
-  }
+function freshState() {
+  return {
+    zm19: [],
+    vttk: {},
+    mouvements: [],
+    retours: [],
+    refSupports: JSON.parse(JSON.stringify(DEFAULT_REF_SUPPORTS)),
+    refTransporteurs: {},
+    batches: [],
+  };
 }
 
-function save(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-let state = {
-  zm19: load(STORAGE_KEYS.zm19, []),
-  vttk: load(STORAGE_KEYS.vttk, {}),
-  mouvements: load(STORAGE_KEYS.mouvements, []),
-  retours: load(STORAGE_KEYS.retours, []),
-  refSupports: load(STORAGE_KEYS.refSupports, JSON.parse(JSON.stringify(DEFAULT_REF_SUPPORTS))),
-  refTransporteurs: load(STORAGE_KEYS.refTransporteurs, {}),
-  batches: load(STORAGE_KEYS.batches, []),
-};
-
-function persist() {
-  save(STORAGE_KEYS.zm19, state.zm19);
-  save(STORAGE_KEYS.vttk, state.vttk);
-  save(STORAGE_KEYS.mouvements, state.mouvements);
-  save(STORAGE_KEYS.retours, state.retours);
-  save(STORAGE_KEYS.refSupports, state.refSupports);
-  save(STORAGE_KEYS.refTransporteurs, state.refTransporteurs);
-  save(STORAGE_KEYS.batches, state.batches);
-}
+let state = freshState();
 
 function ensureTransporteurEntry(code) {
   let entry = state.refTransporteurs[code];
@@ -817,7 +785,6 @@ async function importZM19(file) {
     rows: kept,
     skipped,
   });
-  persist();
   return { kept, skipped, total: state.zm19.length };
 }
 
@@ -867,7 +834,6 @@ async function importVTTK(file) {
     rows: kept,
     skipped: skipped + skippedExpedition,
   });
-  persist();
   return { kept, skipped, skippedExpedition };
 }
 
@@ -921,7 +887,6 @@ function rebuildMouvements() {
 
   mouvements.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
   state.mouvements = mouvements;
-  persist();
 
   const ok = mouvements.filter((m) => m.statut === 'ok').length;
   return { total: mouvements.length, ok, attente: mouvements.length - ok };
@@ -936,12 +901,10 @@ function addRetour(date, transporteur, quantite, reference) {
     id: `retour-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     date, transporteur, quantite, reference,
   });
-  persist();
 }
 
 function deleteRetour(id) {
   state.retours = state.retours.filter((r) => r.id !== id);
-  persist();
 }
 
 /* ---------------------------------------------------------------------- *
@@ -1249,19 +1212,16 @@ function renderRefSupports() {
     `;
     tr.querySelector('[data-field="label"]').addEventListener('change', (e) => {
       s.label = e.target.value;
-      persist();
       rebuildMouvements();
       renderAll();
     });
     tr.querySelector('[data-field="quantite"]').addEventListener('change', (e) => {
       s.quantite = e.target.value === '' ? null : Number(e.target.value);
-      persist();
       rebuildMouvements();
       renderAll();
     });
     tr.querySelector('button').addEventListener('click', () => {
       delete state.refSupports[code];
-      persist();
       rebuildMouvements();
       renderAll();
     });
@@ -1282,13 +1242,11 @@ function renderRefTransporteurs() {
     `;
     tr.querySelector('[data-field="nom"]').addEventListener('change', (e) => {
       t.nom = e.target.value.trim();
-      persist();
       rebuildMouvements();
       renderAll();
     });
     tr.querySelector('button').addEventListener('click', () => {
       delete state.refTransporteurs[code];
-      persist();
       rebuildMouvements();
       renderAll();
     });
@@ -1332,17 +1290,17 @@ function downloadStyledExcel(filename, title, columns, rows) {
 <style>
   body { font-family: Calibri, Arial, sans-serif; }
   table { border-collapse: collapse; font-size: 12px; }
-  .title { font-size: 16px; font-weight: bold; color: #1d1d1f; padding: 4px 0 10px; font-family: Calibri, Arial, sans-serif; }
+  .title { font-size: 16px; font-weight: bold; color: #23303d; padding: 4px 0 10px; font-family: Calibri, Arial, sans-serif; }
   th {
-    background: #0071e3; color: #ffffff; font-weight: bold;
-    padding: 7px 12px; border: 1px solid #005bb8; text-align: left;
+    background: #1f5c9e; color: #ffffff; font-weight: bold;
+    padding: 7px 12px; border: 1px solid #164674; text-align: left;
   }
-  td { padding: 6px 12px; border: 1px solid #dcdce1; }
-  tr:nth-child(even) td { background: #f5f7fa; }
+  td { padding: 6px 12px; border: 1px solid #d7dce2; }
+  tr:nth-child(even) td { background: #f4f6f8; }
   td.num { text-align: right; mso-number-format: "0"; }
-  td.pos { background: #fff2e0; color: #a15c00; font-weight: bold; }
-  td.zero { background: #e6f7ea; color: #1c7a34; font-weight: bold; }
-  td.neg { background: #ffe9e7; color: #c62b21; font-weight: bold; }
+  td.pos { background: #f8ecd9; color: #a5680d; font-weight: bold; }
+  td.zero { background: #e5f1e9; color: #2f7a4f; font-weight: bold; }
+  td.neg { background: #f8e3e1; color: #b3261e; font-weight: bold; }
 </style>
 </head>
 <body>
@@ -1475,13 +1433,8 @@ function setupImport() {
   });
 
   document.querySelector('#btn-reset-all').addEventListener('click', () => {
-    if (!confirm('Supprimer toutes les données importées, mouvements, retours et référentiels ?')) return;
-    Object.values(STORAGE_KEYS).forEach((k) => localStorage.removeItem(k));
-    state = {
-      zm19: [], vttk: {}, mouvements: [], retours: [],
-      refSupports: JSON.parse(JSON.stringify(DEFAULT_REF_SUPPORTS)),
-      refTransporteurs: {}, batches: [],
-    };
+    if (!confirm('Vider toutes les données importées, mouvements, retours et référentiels de cette session ?')) return;
+    state = freshState();
     renderAll();
   });
 }
@@ -1519,7 +1472,6 @@ function setupReferentiels() {
     if (!code) return;
     const key = code.trim().toUpperCase();
     if (!state.refSupports[key]) state.refSupports[key] = { label: '', quantite: null };
-    persist();
     renderRefSupports();
   });
 
@@ -1528,7 +1480,6 @@ function setupReferentiels() {
     if (!code) return;
     const key = code.trim().toUpperCase();
     if (!state.refTransporteurs[key]) state.refTransporteurs[key] = { nom: resolveKnownCarrierName(key) };
-    persist();
     renderRefTransporteurs();
   });
 }
@@ -1550,7 +1501,6 @@ function renderAll() {
 
 function init() {
   backfillKnownCarrierNames();
-  persist();
   setupTabs();
   setupImport();
   setupMouvements();
