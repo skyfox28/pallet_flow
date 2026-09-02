@@ -1,3 +1,11 @@
+# Attributions
+
+`index.html` embeds [SheetJS](https://sheetjs.com) (the `xlsx` library, version
+0.18.5) inline so the app has zero external dependencies and works fully
+offline as a single file. Its license (Apache 2.0) follows below.
+
+---
+
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/

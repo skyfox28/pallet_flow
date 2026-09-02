@@ -1,28 +1,25 @@
 # Pallet Flow
 
-Application web (HTML/JS, sans backend) pour le suivi des palettes par livraison et
-par transporteur, destinée à remplacer une base Access. Prototype mono-utilisateur :
-les données sont stockées dans le navigateur (`localStorage`).
+Application 100% front-end (HTML/CSS/JS, aucun backend) pour le suivi des palettes
+par livraison et par transporteur, destinée à remplacer une base Access. Prototype
+mono-utilisateur : les données sont stockées dans le navigateur (`localStorage`).
 
 ## Utilisation
 
-Ouvrir `index.html` dans un navigateur, ou servir le dossier avec un serveur statique :
-
-```bash
-python3 -m http.server 8000
-# puis ouvrir http://localhost:8000
-```
-
-Aucune connexion internet n'est nécessaire : la librairie de lecture Excel
-([SheetJS](https://sheetjs.com)) est fournie localement dans `js/vendor/`.
+Tout tient dans un **seul fichier autonome, `index.html`** (CSS, JS et la librairie
+Excel sont intégrés dedans) : télécharge ce fichier et double-clique dessus, ou
+ouvre-le depuis ton navigateur (`Fichier > Ouvrir...`). Aucun dossier annexe, aucune
+connexion internet, aucun serveur requis — le fichier fonctionne partout où tu le
+déplaces (clé USB, email, poste local...).
 
 ## Workflow
 
 1. **Import ZM19** : export SAP contenant les sorties de palettes (colonnes utilisées :
    `Typ Pal`, `Document`, `Exp`, `Date`, `Uté stckage` en identifiant technique de ligne).
 2. **Import VTTK** : export SAP contenant, par n° de transport, l'itinéraire de
-   transport (`Nº du transport`, `Itinéraire transport`). Les lignes sans itinéraire
-   (chargement non finalisé) sont ignorées à l'import.
+   transport (`Nº du transport`, `Itinéraire transport`). Seules les lignes n° de
+   chargement (préfixe `970`) sont conservées ; les n° d'expédition (préfixe `960`)
+   et les lignes sans itinéraire (chargement non finalisé) sont ignorées.
 3. **Rapprochement** : relie chaque ligne ZM19 à son itinéraire VTTK via le n° de
    transport (`Exp` = `Nº du transport`), puis résout le transporteur via le
    référentiel (onglet *Référentiels*). Les nouveaux codes d'itinéraire découverts
